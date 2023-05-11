@@ -1,5 +1,10 @@
 package stock_m.dto;
 
-public class BroadcastLimitDto {
+import lombok.Data;
 
+@Data
+public class BroadcastLimitDto {
+	private int lbrno;
+	private String userid;
+	private int limit;
 }
