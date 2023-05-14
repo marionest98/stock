@@ -11,4 +11,5 @@ public class BuyDto {
 	private String userid; 
 	private Date bdate; 
 	private int price;
+	private int bcount;
 }

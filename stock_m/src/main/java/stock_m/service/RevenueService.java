@@ -1,19 +1,34 @@
+/*
+   Date    : 2023.05.15
+   name    : RevenueService
+   type    : Service
+   ver     : 1.1
+   connect  : RevenueController
+   content : 판매,구매내역 장부관리 서비스 클래스
+   writer  : 이이지
+   api     : x
+  */
 package stock_m.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import stock_m.dao.RevenueDao;
 import stock_m.dto.BuyDto;
 import stock_m.dto.RevenueDto;
 import stock_m.dto.SellDto;
+import stock_m.dto.StockDto;
 
 @Service
 public class RevenueService {
@@ -21,10 +36,10 @@ public class RevenueService {
 	RevenueDao dao;
 	
 	
-	public int insert(RevenueDto dto) {
+	public int insert(SellDto dto) {
            return dao.insert(dto);//dao에 추가
 		}	
-	public List<RevenueDto> selectOne(String userid) {
+	public List<SellDto> selectOne(String userid) {
 		return dao.selectOne(userid);
 	}
 	  
@@ -48,10 +63,7 @@ public class RevenueService {
 		
 		return dao.sellList(userid);
 	}
-	public List<BuyDto> buyList(String userid){
-		
-		return dao.buyList(userid);
-	}
+	
 	
 	public SellDto selectsell(int sno) {
 		
@@ -64,4 +76,61 @@ public class RevenueService {
 	
 	
 	
+//	public int updateSell(int[] sno, int[] pno, int[] price) {
+//		return dao.updateSell(sno, pno, price);
+//		
+//	}
+	//구매
+	
+	
+	public int rbuyinsert(BuyDto dto) {
+		return dao.rbuyinsert(dto);
+	}
+	
+
+	public List<BuyDto> rbuyList(String userid){
+		return dao.rbuyList(userid);
+	}
+	
+	
+	public int rbuyupdate(List<BuyDto> dto) {
+		return dao.rbuyupdate(dto);
+	}
+	
+	
+	public int rbuydelete(@RequestParam int sno) {
+		return dao.rbuydelete(sno);
+		
+	}
+	public int updatesell(List<SellDto> dto) {
+		return dao.updatesell(dto);
+		
+	}
+	
+    
+	public int sellinsert(String userid, String pno, int price,int scount) {
+          Map<String, Object> m = new HashMap<>();
+		
+		m.put("userid", userid);
+		m.put("pno",pno);
+		m.put("price", price);
+		m.put("scount", scount);
+		return dao.sellinsert(m);
+		
+	}
+	public int buyinsert(String userid, String pno, int price,int bcount) {
+		  Map<String, Object> m = new HashMap<>();
+			
+			m.put("userid", userid);
+			m.put("pno",pno);
+			m.put("price", price);
+			m.put("bcount", bcount);
+			return dao.buyinsert(m);
+		
+	}
+	public String selectpname(int pno) {
+		return dao.selectpname(pno);
+		
+	}
 }
+
