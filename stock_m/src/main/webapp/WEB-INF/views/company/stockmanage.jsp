@@ -408,18 +408,7 @@
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                    <form action="/company/sinsert"  id="sinsert" >
                                     
-                                        <tr>
-                                            <th><button type="button" id="plus" >+</button></th>
-                                            <th><input type="text" name="scontent"></th>
-                                            <th><input type="text" name="s_val"></th>
-                                            <th></th>
-                                            <th><input type="text" name="s_volume"></th>
-                                            <th><input type="submit" value="입력"> </th>
-                                        </tr>
-                                        
-                                        </form>
                                     </tfoot>
                                     <tbody>
                                     <form action="/company/supdate" id="upform">
@@ -431,8 +420,8 @@
                   <td><input type="text" id="scontent_${stock.sno}" value="${stock.scontent}" name="scontent" readonly></td>
                   <td><input type="text" id="s_val_${stock.s_val}" value="${stock.s_val}" name="s_val" readonly></td>
 						<td><input type="text" id="sno_${stock.sno}" value="${stock.sno}" name="sno" readonly></td><!-- 상세보기 -->
-						<td><input type="text" id="s_volume_${stock.s_volume}" value="${stock.s_volume}" name="s_volume" readonly></td>
-						<td><button type="button" id="${stock.sno}" onclick="up(this)">저장</button>
+						<td><input type="text" id="s_volume_${stock.s_volume}" value="${stock.s_volume}" name="s_volume" ></td>
+						<td><button type="button" id="${stock.sno}" onclick="up(this)">수정</button>
                             <button type="button" id="${stock.sno}" onclick="dc(this)">삭제</button></td>
 					</tr>
 				
@@ -510,14 +499,14 @@ function selectAll(selectAll){
 	  })
 	}
 
-function up(button){
+/* function up(button){
     var sno = button.id.toString().split("_"); 
     console.log(sno);
     //document.getElementById("sno_" + sno).removeAttribute("readonly");
-    document.getElementById("pno_" + sno).removeAttribute("readonly");
-    document.getElementById("price_" + sno).removeAttribute("readonly"); 
+   // document.getElementById("pno_" + sno).removeAttribute("readonly");
+    document.getElementById("s_volume_" + sno).removeAttribute("readonly"); 
         
-}
+} */
 	function dc(obj){
 		var params = {
 				sno : obj.getAttribute("id")

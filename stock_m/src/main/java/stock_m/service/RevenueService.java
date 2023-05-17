@@ -45,9 +45,13 @@ public class RevenueService {
 	  
 	 // public int updateRefOne(SellDto dto) { 
 		//  return dao.updateRefOne(dto); }
-	 
-	public int deleteRef(int sno) {
-		return dao.deleteRef(sno);
+	
+	public int deletesell(int sno) {
+		return dao.deletesell(sno);
+	}
+    
+	public int deleteRef(int bno) {
+		return dao.deleteRef(bno);
 	}
     
 	public List<RevenueDto> boardList(int start){
@@ -59,7 +63,7 @@ public class RevenueService {
 	public int count() {
 		return dao.count();
 	}
-	public List<SellDto> sellList(String userid){
+	public List<Map<String, Object>> sellList(String userid){
 		
 		return dao.sellList(userid);
 	}
@@ -88,7 +92,7 @@ public class RevenueService {
 	}
 	
 
-	public List<BuyDto> rbuyList(String userid){
+	public List<Map<String, Object>> rbuyList(String userid){
 		return dao.rbuyList(userid);
 	}
 	
@@ -98,10 +102,7 @@ public class RevenueService {
 	}
 	
 	
-	public int rbuydelete(@RequestParam int sno) {
-		return dao.rbuydelete(sno);
-		
-	}
+	
 	public int updatesell(List<SellDto> dto) {
 		return dao.updatesell(dto);
 		
@@ -131,6 +132,18 @@ public class RevenueService {
 	public String selectpname(int pno) {
 		return dao.selectpname(pno);
 		
+	}
+	/*
+	 * public String merge(List<SellDto>,List<BuyDto>) {
+	 * 
+	 * return dao. }
+	 */
+	public List<Map<String, Object>> totalList(String userid){
+		return dao.totalList(userid);
+	}
+	public List<StockDto> searchrcontent(String search) {
+		// TODO Auto-generated method stub
+		return dao.searchrcontent(search);
 	}
 }
 

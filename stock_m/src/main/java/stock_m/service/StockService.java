@@ -57,7 +57,7 @@ public class StockService {
 
 		public int count() {
 			// TODO Auto-generated method stub
-			return 0;
+			return dao.count();
 		}
 		
 }

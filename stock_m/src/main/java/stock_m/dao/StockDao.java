@@ -41,5 +41,8 @@ public interface StockDao {
 		@Insert("insert into stock (scontent,s_val,userid,s_volume,s_date) values(#{scontent},#{s_val},#{userid}, #{s_volume}, now())")
 		public int sinsert(Map<String, Object> m);
 	    
+		@Select("select count(*) from stock")
+		int count();
+		
 
 }
