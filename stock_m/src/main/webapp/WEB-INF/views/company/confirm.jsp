@@ -451,9 +451,7 @@
                                     </form>
                                       <form action='/company/sellinsert'  id='sellinsert' >
                                     </form>
-                                
-                                <button type="button" onclick="submitForm()">통합수정</button>
-				                    
+                            <button onclick='totaldel(this)'>통합삭제</button>
                                 </c:if>
                                 <c:if test="${count == 0 }">
 	아직 거래가 없습니다.
@@ -579,6 +577,7 @@ $.ajax({
 
 })
 }
+
 function sc(obj){//sell 삭제
 	
 	sno = obj.getAttribute("id");
@@ -614,31 +613,73 @@ $.ajax({
 		})
 	}*/
 	function totaldel(obj){
-		
-		
+		 var no=obj.getAttribute("id");
+		 var kind=obj.getAttribute("title");
+			console.log(no);
+			console.log(kind);
+		 if(obj.getAttribute("title") == "판매"){
+			
+
+			 var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			    var selectedItems = [];
+		        console.log(selectedItems);
+			    checkboxes.forEach(function (checkbox) {
+			      selectedItems.push(checkbox.value);
+			    });
+			    $.ajax({
+			    	  type: "GET",
+			    	  url: "/company/rcheckdelete",
+			    	  data: { selectedItems: selectedItems },
+			    	}).done(function() {
+			    	  document.location.reload();
+			    	});
+			}
+			else{
+				var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			    var selectedItems = [];
+		        
+			    checkboxes.forEach(function (checkbox) {
+			      selectedItems.push(checkbox.value);
+			     
+			    });
+			    $.ajax({
+			    	  type: "GET",
+			    	  url: "/company/revsellcheckdel",
+			    	  data: { selectedItems: selectedItems },
+			    	}).done(function() {
+			    		 
+			    	  document.location.reload();
+			    	 
+			    	});
+	    
+	  } 
 	}
+	
 	//구매체크 삭제
 	  function delcheckit(obj) {
 	    var checkboxes = document.querySelectorAll('input[name="buy_check"]:checked');
 	    var selectedItems = [];
-        console.log(checkboxes);
+        
 	    checkboxes.forEach(function (checkbox) {
 	      selectedItems.push(checkbox.value);
+	     
 	    });
 	    $.ajax({
 	    	  type: "GET",
 	    	  url: "/company/rcheckdelete",
 	    	  data: { selectedItems: selectedItems },
 	    	}).done(function() {
+	    		 
 	    	  document.location.reload();
+	    	 
 	    	});
 	    
-	  } 
+	}
 	//판매체크 삭제
 	function delchecksell(obj) {
 	    var checkboxes = document.querySelectorAll('input[name="sell_check"]:checked');
 	    var selectedItems = [];
-        console.log(checkboxes);
+        console.log(selectedItems);
 	    checkboxes.forEach(function (checkbox) {
 	      selectedItems.push(checkbox.value);
 	    });
@@ -689,6 +730,8 @@ $.ajax({
 				  
 				}).done(function(){
 					 //$("#sbchange").val("buy");
+					 alert(no);
+			        alert(kind);
 					document.location.reload();
 					 
 
@@ -702,8 +745,10 @@ $.ajax({
 				   	
 				      
 				    }).done(function(){
+				    	alert(no);
+						alert(kind);
 				    	 //$("#sbchange").val("buy");
-				    	document.location.reload();
+				    		document.location.reload();
 				    	 
 
 				})
@@ -802,9 +847,10 @@ $.ajax({
 		     	    		          +"<td>"+response[rb]["pname"]+"</td>"
 		     	    		         +"<td>"+response[rb]["price"]+"</td>"
 		     	    		        +"<td>"+response[rb]["count"]+"</td>"
-		     	    		      str += "<td><button type='button' id= "+response[rb]["no"]+" onclick=nodelete(this)>삭제</button></td>";
+		     	    		      str += "<td><button type='button' id= '"+response[rb]["no"]+"' title='"+response[rb]["kind"]+"'  onclick=nodelete(this)>삭제</button></td>";
 		     	    			str+="</tr>";
 		     	    		     }
+		     	    		
 		     	    		       
 		     	    		 $("#formin").html(str);
 		     	    		

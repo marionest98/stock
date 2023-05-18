@@ -36,10 +36,10 @@ public interface StockDao {
 		int sdelete(int sno);
 		
 		@Select("select * from stock where scontent like concat('%',#{scontent},'%')")
-		public List<StockDto> searchscontent(String search);
+	    List<StockDto> searchscontent(String search);
 
 		@Insert("insert into stock (scontent,s_val,userid,s_volume,s_date) values(#{scontent},#{s_val},#{userid}, #{s_volume}, now())")
-		public int sinsert(Map<String, Object> m);
+	    int sinsert(Map<String, Object> m);
 	    
 		@Select("select count(*) from stock")
 		int count();
