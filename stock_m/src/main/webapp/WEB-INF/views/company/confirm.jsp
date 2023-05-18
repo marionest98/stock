@@ -35,21 +35,10 @@
 
     <!-- Custom styles for this page -->
      <!--<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<style type="text/css">
-		  .sorting,#dataTable{
-			pointer-events: none;
-		}
-		
-		#sbchange,#test_check,#checkall{
-			pointer-events: auto;
-		}
-		button{
-			pointer-events: auto;
-		}
+	
 		
 		
-		
-	</style>
+	
 </head>
 
 <body id="page-top">
@@ -432,7 +421,7 @@
 					                       <th>관리버튼</th>
                                         </tr>
                                     </thead>
-                                    
+                                    </thead>
                                     <tfoot>
                                            
                               
@@ -523,16 +512,24 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
 <script type="text/javascript">
 //total 전체선택
-
-function selectAll(selectAll){
+/* function selectAll(selectAll){
 	  const checkboxes 
 	     = document.querySelectorAll('input[name="test_check"]');
 	  
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked
 	  })
-	}
-//sell 전체선택	
+	} */
+	 function selectAll(selectAll){
+		  const checkboxes 
+		     = document.querySelectorAll('input[type="checkbox"]');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = selectAll.checked
+		  })
+		} 	
+	
+/* //sell 전체선택	
 function sellselectAll(selectAll){
 	  const checkboxes 
 	     = document.querySelectorAll('input[name="sell_check"]');
@@ -549,7 +546,7 @@ function buyselectAll(selectAll){
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked
 	  })
-	}
+	} */
 
 function submitForm(){
 	document.getElementById("upform").submit();
@@ -655,7 +652,7 @@ $.ajax({
 	    
 	  } 
 	
-	  /*  function upcheckit(button) {
+	   function upcheckit(button) {
 		 
 		   
 		    var checkboxes = document.querySelectorAll('input[name="test_check"]:checked');
@@ -676,7 +673,7 @@ $.ajax({
 		    	  document.location.reload();
 		    	});
 		    
-		  }  */
+		  } 
 	   
 	    function nodelete(obj){
 		 var no=obj.getAttribute("id");
@@ -784,27 +781,15 @@ $.ajax({
 				                      
 				    	}).done(function(response) {
 				    		
-				    		
+				    		$("#sbchange").val("total");
 				    		console.log("totalList");
 				    		$("input:checkbox[id='checkall']").prop("checked", false);
-				    		$("input:checkbox[id='test_check']").prop("checked", false);
+				    		//$("input:checkbox[id='test_check']").prop("checked", false);
 				    		 document.getElementById("buyinsert").style.display = "none";
 		     	    		document.getElementById("sellinsert").style.display = "none";
 		     	    		//document.getElementById("delchecksell").style.display = "none";
 		     	    		//document.getElementById("delcheckit").style.display = "none";
-		     	    		 var the="";
-		     	    		the +="<tr>"
-		     	    		the += "<th><input type='checkbox' id='checkall' onclick='selectAll(this)'></th>";
-		     	    		the += "<th>날짜</th>";
-		     	    		the +="<th>거래번호</th>";
-		     	    		the += "<th>구분</th>";
-		     	    		the += "<th>상품명</th>";
-		     	    		the += "<th>금액</th>";
-		     	    		the += "<th>판매량</th>";
-		     	    		the += "<th>관리버튼</th>";
-		     	    		the +=  "</tr>";
-                              $("#thead").html(the);  
-                              
+		     	    		 
 		     	    		var str = "";
 		     	    		for(let rb in response){
 		     	    			console.log(response[rb]["date"]);
@@ -834,10 +819,10 @@ $.ajax({
 	 		    	  dataType: "json"
 	 		    	}).done(function(response) {
 	 		    		
-	 		    		
+	 		    		$("#sbchange").val("sell");
 	 		    		//alert($("#sbchange").val())
 	 		    		$("input:checkbox[id='checkall']").prop("checked", false);
-	 		    		$("input:checkbox[id='test_check']").prop("checked", false);
+	 		    		//$("input:checkbox[id='test_check']").prop("checked", false);
 	 		    		document.getElementById("sellinsert").style.display = "block";
 	 		    		document.getElementById("buyinsert").style.display = "none";
 	 		    		//document.getElementById("delchecksell").style.display = "block";
@@ -845,24 +830,13 @@ $.ajax({
 	 		    		
 	 		    		
 	 		    		console.log("sellList");
-	 		    		 var the="";
-		     	    		the +="<tr>"
-		     	    		the += "<th><input type='checkbox' id='sellcheckall' onclick='sellselectAll(this)'></th>";
-		     	    		the += "<th>날짜</th>";
-		     	    		the +="<th>거래번호</th>";
-		     	    		the += "<th>구분</th>";
-		     	    		the += "<th>상품명</th>";
-		     	    		the += "<th>금액</th>";
-		     	    		the += "<th>판매량</th>";
-		     	    		the += "<th>관리버튼</th>";
-		     	    		the +=  "</tr>";
-                              $("#thead").html(the);  
-                              
+	 		    		 
 	 		    		var str = "";
 	     	    		for(let rb in response){
 	     	    			console.log(response[rb]["sdate"]);
 	     	    			
 	     	    			str += "<tr>";
+	     	    			
 	     	    			str+= "<td><input id='sell_check' name='sell_check' value="+response[rb]["sno"]+" type='checkbox'></td>";
 	     	    			str += "<td>"+response[rb]["sdate"]+"</td>"
 	     	    		          +"<td>"+response[rb]["sno"]+"</td>"
@@ -907,25 +881,13 @@ $.ajax({
 	     	                      
 	     	    	}).done(function(response) {
 	     	    		
-	     	    		
+	     	    		$("#sbchange").val("buy");
 	     	    		$("input:checkbox[id='checkall']").prop("checked", false);
-	     	    		$("input:checkbox[id='test_check']").prop("checked", false);
+	     	    		//$("input:checkbox[id='test_check']").prop("checked", false);
 	     	    		//console.log("hiiii");
 	     	    		document.getElementById("buyinsert").style.display = "block";
 	     	    		document.getElementById("sellinsert").style.display = "none";
-	     	    		 var the="";
-		     	    		the +="<tr>"
-		     	    		the += "<th><input type='checkbox' id='buycheckall' onclick='buyselectAll(this)'></th>";
-		     	    		the += "<th>날짜</th>";
-		     	    		the +="<th>거래번호</th>";
-		     	    		the += "<th>구분</th>";
-		     	    		the += "<th>상품명</th>";
-		     	    		the += "<th>금액</th>";
-		     	    		the += "<th>구매량</th>";
-		     	    		the += "<th>관리버튼</th>";
-		     	    		the +=  "</tr>";
-                              $("#thead").html(the);  
-                              
+	     	    		
 	     	    		
 	     	    		var str = "";
 	     	    		for(let rb in response){
@@ -976,7 +938,19 @@ $.ajax({
 	  </script>
 	 
 	  
-	 
+	 <!-- Bootstrap core JavaScript-->
+  <script src="../../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../../js/sb-admin-2.min.js"></script>
+
+   
+  
+
 </body>
 
 </html>
