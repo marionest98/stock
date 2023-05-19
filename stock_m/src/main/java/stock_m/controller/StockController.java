@@ -17,9 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import stock_m.dto.BuyDto;
 import stock_m.dto.StockDto;
 
 import stock_m.service.StockService;
@@ -110,6 +113,42 @@ public class StockController {
 						 
 					   return "/company/search";
 					 
-					}		
+					}	
+
+					/*
+					 * @GetMapping("/company/supdate") public String stockupdate(List<StockDto> dto)
+					 * {
+					 * 
+					 * service.stockupdate(dto); return "redirect:/company/stockmanage"; }
+					 */
+					  /*@GetMapping("/company/supdate")
+					  public String stockupdate(@Param("sno") int sno,@Param("s_volume") int s_volume) {
+						  
+						  service.stockupdate(sno,s_volume);
+						  return "redirect:/company/stockmanage";
+					  }*/
+					  
+					  @GetMapping("/company/ssupdate/{str}")
+					  @ResponseBody
+					  public String ssupdate(@PathVariable("str")String str ) {
+						  System.out.println("------------this is update start------------");
+						    System.out.println(str);
+						    String snos = str.split("A")[0];
+						    String s_volumes = str.split("A")[1];
+						    int sno = Integer.parseInt(snos);
+						    int s_volume = Integer.parseInt(s_volumes);
+						    System.out.println(s_volume+"////////////"+sno);
+						    int a = service.supdate(s_volume,sno);
+						 return "ok";
+					  }
+
+
+					private int parseInt(String snos) {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+
+
+					
 
 }

@@ -33,9 +33,9 @@ public class StockService {
 		}
 		
 		
-		public int supdate(List<StockDto> dto) {
+		/* public int supdate(List<StockDto> dto) {
 			return dao.supdate(dto);
-		}
+		}*/
 		
 		public int sdelete(int sno) {
 			return dao.sdelete(sno);
@@ -59,5 +59,34 @@ public class StockService {
 			// TODO Auto-generated method stub
 			return dao.count();
 		}
+
+
+		/*public int stockupdate(List<StockDto> dto) {
+		return dao.stockupdate(dto);			
+		}*/
+
+
+		/*public int stockupdate(int sno, int s_volume) {
+             Map<String, Object> m = new HashMap<>();
+			
+			m.put("sno", sno);
+			m.put("s_volume", s_volume);
+			return dao.stockupdate(m);
+			
+		}*/
+
+
+		 
+		
+
+
+		public int supdate(int sno, int s_volume) {
+			System.out.println("this is service : "+sno+" /// "+s_volume);
+			return dao.supdate(sno,s_volume);
+			
+		}
+		
+
+
 		
 }

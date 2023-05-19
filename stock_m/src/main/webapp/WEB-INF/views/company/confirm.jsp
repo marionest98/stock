@@ -613,6 +613,7 @@ $.ajax({
 		})
 	}*/
 	function totaldel(obj){
+		var element = document.getElementById("test_check");
 		 var no=obj.getAttribute("id");
 		 var kind=obj.getAttribute("title");
 			console.log(no);

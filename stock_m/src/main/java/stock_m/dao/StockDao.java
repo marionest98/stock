@@ -16,6 +16,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -29,8 +30,10 @@ public interface StockDao {
 		@Select("select * from stock where userid = #{'1'}")
 		List<StockDto> sList(String userid);
 		
-		@Update("update stock set price=#{price} where sno=#{sno}")
-		int supdate(List<StockDto> dto);	
+		/*
+		 * @Update("update stock set price=#{price} where sno=#{sno}") int
+		 * supdate(List<StockDto> dto);
+		 */
 		
 		@Delete ("delete from stock where sno = #{sno}")
 		int sdelete(int sno);
@@ -43,6 +46,18 @@ public interface StockDao {
 	    
 		@Select("select count(*) from stock")
 		int count();
+
+		@Update("update stock set * where sno=#{sno}")
+		int stockupdate(List<StockDto> dto);
+		
+		@Update("update sell set pno=#{pno}, price=#{price} where sno=#{sno} ") 
+		int updateRefOne(Map<String, Integer> snomap);
+		
+		
+		@Update("update stock set s_volume=#{s_volume} where sno=#{sno}")
+		int supdate(@Param("s_volume")int s_volume, @Param("sno")int sno);
+
+		//int supdate(String s_volume, String sno);
 		
 
 }

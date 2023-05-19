@@ -410,24 +410,26 @@
                                     <tfoot>
                                     
                                     </tfoot>
-                                    <tbody>
                                     <form action="/company/supdate" id="upform">
+                                    <tbody>
+                                      
                                         <c:forEach items="${stockList}" var="stock">
 				
 					<tr>
 					<td>
-                      <input type="checkbox" id="test_check" name="test_check" value="${stock.sno}"></td>
+                      <input type="checkbox" id="test_check" name='test_check' value="${stock.sno}"></td>
                   <td><input type="text" id="scontent_${stock.sno}" value="${stock.scontent}" name="scontent" readonly></td>
-                  <td><input type="text" id="s_val_${stock.s_val}" value="${stock.s_val}" name="s_val" readonly></td>
+                  <td><input type="text" id="s_val_${stock.sno}" value="${stock.s_val}" name="s_val" readonly></td>
 						<td><input type="text" id="sno_${stock.sno}" value="${stock.sno}" name="sno" readonly></td><!-- 상세보기 -->
-						<td><input type="text" id="s_volume_${stock.s_volume}" value="${stock.s_volume}" name="s_volume" ></td>
-						<td><button type="button" id="${stock.sno}" onclick="up(this)">수정</button>
+						<td><input class="a" type="text"  id="s_volume_${stock.sno}" value="${stock.s_volume}" name="s_volume"></td>
+						<td>	
                             <button type="button" id="${stock.sno}" onclick="dc(this)">삭제</button></td>
 					</tr>
 				
-				</c:forEach>
-				</form>
+				                      </c:forEach>
+				
                                     </tbody>
+                                     </form> 
                                     <button type="submit"> 통합수정</button>
 				                    <button onclick="delcheckit()">통합삭제</button>
                                 </table>
@@ -489,8 +491,27 @@
     <!--Script-->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
 <script type="text/javascript">
+var inputElements = document.querySelectorAll('input.a');
 
+inputElements.forEach(function(inputElement) {
+  inputElement.addEventListener('change', function(event) {
+    var sno = event.target.id.toString().split("_")[2];
+    var s_volume = event.target.value;
+    var str = sno.toString() + "A" + s_volume.toString();
+    console.log(str);
+    console.log('Value changed: ' + event.target.value, sno);
 
+    $.ajax({
+      url: "/company/ssupdate/" + str,
+      type: "GET",
+      dataType: "text"
+    }).done(function() {
+      document.location.reload();
+    });
+  });
+});
+
+//"/company/ssupdate?sno=" + sno + "&s_volume=" + s_volume
 function selectAll(selectAll){
 	  const checkboxes 
 	     = document.querySelectorAll('input[name="test_check"]');
@@ -508,6 +529,25 @@ function selectAll(selectAll){
     document.getElementById("s_volume_" + sno).removeAttribute("readonly"); 
         
 } */
+
+/*function supdate(button){
+	var sno = button.id.toString().split("_"); 
+	var element = document.getElementById("s_volume_" + sno);
+	var s_volume = element.value;
+	
+	
+	 $.ajax({
+	      type: "GET",
+	      url: "/company/supdate",
+	      data: {sno:sno, s_volume:s_volume}
+	   
+	      
+	    }).done(function(){
+	    	document.location.reload();
+
+	})
+	
+}*/
 	function dc(obj){
 		var params = {
 				sno : obj.getAttribute("id")
@@ -545,7 +585,7 @@ function selectAll(selectAll){
 	function upform(){
 		document.getElementById("upform").submit();
 	} 
-	  /*   function upcheckit(button) {
+	    function upcheckit(button) {
 		 
 		   
 		    var checkboxes = document.querySelectorAll('input[name="test_check"]:checked');
@@ -559,14 +599,14 @@ function selectAll(selectAll){
 		    });
 		    $.ajax({
 		    	  type: "GET",
-		    	  url: '/company/rcheckupdate',
+		    	  url: '/company/stockupdate',
 		    	  data:  { selectedItems: selectedItems },
 		                      
 		    	}).done(function() {
 		    	  document.location.reload();
 		    	});
 		    
-		  } */
+		  } 
 	  </script>
 	 
 	  
