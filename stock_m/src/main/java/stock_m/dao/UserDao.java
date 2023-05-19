@@ -1,5 +1,27 @@
 package stock_m.dao;
 
+<<<<<<< HEAD
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import stock_m.dto.UserDto;
+
+
+@Mapper
+public interface UserDao {
+	/*
+	 * String idCheck(String id); int insertMem(UserDto dto); UserDto login(UserDto
+	 * dto); int updateMem(UserDto dto); int deleteMem(String id);
+	 */
+	/*
+	 * @Select("select userid, userpw ,gender,age,username,role,enabled from user")
+	 * List<UserDto> memsInfo();
+	 */
+	
+}
+=======
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,3 +39,4 @@ public interface UserDao {
 	@Insert("INSERT INTO revenue(userid,revenuelimit,bsum,ssum,profit) values(#{userid}, 0, 0, 0, 0)")
 	int insertRevenue(UserDto user);
 }
+>>>>>>> main
