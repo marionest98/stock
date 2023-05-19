@@ -28,6 +28,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Example
+//var= ${}
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
@@ -38,12 +39,12 @@ var myBarChart = new Chart(ctx, {
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
+      data: [, 5312, 6251, 7841, 9821, 14984],
     }],
   },
   options: {
     maintainAspectRatio: false,
-    layout: {
+    layout: { 
       padding: {
         left: 10,
         right: 25,
