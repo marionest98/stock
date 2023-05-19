@@ -223,10 +223,10 @@ public class RevenueController {
 						}				
 							
 						
-						/*
-						 * @RequestMapping("/company/total") public String selectpname(int pno) { return
-						 * dao.selectpname(pno);
-						 * 
-						 * }
-						 */
+						@GetMapping("/company/cr")
+                      public String chartr() {
+							
+							
+							return"/company/cr";
+						}
 }
