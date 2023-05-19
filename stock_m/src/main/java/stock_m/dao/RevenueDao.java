@@ -10,6 +10,7 @@
   */
 package stock_m.dao;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
 
@@ -102,4 +103,15 @@ public interface RevenueDao {
 	
 //	@Update("update sell set price=#{price} where sno=#{sno}")
 //	int updateSell(int[] sno, int[] pno, int[] price);
+=======
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+@Mapper
+public interface RevenueDao {
+	
+	@Select("select `limit` from revenue where userid = 'testcompany'")
+	int checks();
+ 
+>>>>>>> main
 }

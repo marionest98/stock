@@ -10,10 +10,26 @@
   */
 package stock_m.service;
 
+<<<<<<< HEAD
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import stock_m.dao.RevenueDao;
+
+@Service
+public class RevenueService {
+	@Autowired
+	RevenueDao dao;
+	
+	public int checks() {
+		return dao.checks();
+	}
+>>>>>>> main
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
