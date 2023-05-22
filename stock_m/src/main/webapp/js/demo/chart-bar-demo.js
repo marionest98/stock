@@ -1,6 +1,93 @@
+   
+        function search() {
+        var start_date = document.getElementById('start-date-input').value;
+        console.log(start_date);
+        var end_date = document.getElementById('end-date-input').value;
+        console.log(end_date);
+    //window.location.href = `./finance/filtered_data?start_date=${start_date}&end_date=${end_date}`;}
+        showSaledResult(start_date, end_date);
+        }
+
+    
+   
+
+    
+
+   
+
+        function resetSearch(){location.assign("${pageContext.request.contextPath}/finance/orders")};
+
+        
+
+        $(function(){$("input[type='radio'][name='date']").on("change", function() {
+            var dateRange = $(this).val();
+            var startDate = "";
+            var endDate = "";
+
+            // dateRange에 따라 startDate와 endDate값을 설정합니다.
+            switch (dateRange) {
+                case "today":
+                    startDate = new Date();
+                    endDate = new Date();
+                    break;
+                case "1month":
+                    startDate = new Date();
+                    startDate.setMonth(startDate.getMonth() - 1);
+                    endDate = new Date();
+                    break;
+                case "3month":
+                    startDate = new Date();
+                    startDate.setMonth(startDate.getMonth() - 3);
+                    endDate = new Date();
+                    break;
+                case "1year":
+                    startDate = new Date();
+                    startDate.setFullYear(startDate.getFullYear() - 1);
+                    endDate = new Date();
+                    break;
+            }
+
+            var startYear = startDate.getFullYear();
+            var startMonth = startDate.getMonth() + 1 < 10 ? "0" + (startDate.getMonth() + 1) : startDate.getMonth() + 1;
+            var startDateNum = startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate();
+            var endYear = endDate.getFullYear();
+            var endMonth = endDate.getMonth() + 1 < 10 ? "0" + (endDate.getMonth() + 1) : endDate.getMonth() + 1;
+            var endDateNum = endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate();
+
+            var startDateStr = startYear + "-" + startMonth + "-" + startDateNum;
+            var endDateStr = endYear + "-" + endMonth + "-" + endDateNum;
+
+            showSaledResult(startDateStr, endDateStr);
+        });
+        });
+
+        function showSaledResult(start, end) {
+			$.ajax({
+            url: "/company/getsdate",
+            data: {
+                "start-date": start,
+                "end-date": end},
+                type: "GET",
+            }).done(function(response) {
+			    	 var wholeData = response;
+			    	 updateChart(wholeData);
+			    	 
+			    	});
+             
+            
+       
+        }
+
+       -
+        //$("#saled").empty();
+        //$("#saled").append(table_data);
+        
+
+    
+    
 // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+//Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+//Chart.defaults.global.defaultFontColor = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
@@ -29,17 +116,42 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Bar Chart Example
 //var= ${}
-var ctx = document.getElementById("myBarChart");
+function updateChart(wholeData) {
+  var ctx = document.getElementById('myChart');
+  var months = Object.keys(wholeData.totalData);
+//var ctx = document.getElementById("myBarChart");
+//var sellData = document.getElementById("totalselllist").value;
+//var purchasesData = [5312, 6251, 7841];
+//var revenueData = [6251, 7841, 9821];
+console.log(wholeData);
+console.log(wholeData.totalData);
+console.log(wholeData.buyData);
+console.log(wholeData.filteredData);
+console.log(months);
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels:months,
     datasets: [{
-      label: "Revenue",
+      label: "sell",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [, 5312, 6251, 7841, 9821, 14984],
+      data: Object.values(wholeData.filteredData),
+    },
+    {
+      label: "buy",
+      backgroundColor: "#4e73df",
+      hoverBackgroundColor: "#2e59d9",
+      borderColor: "#4e73df",
+      data:  Object.values(wholeData.buyData),
+    },
+    {
+      label: "profit",
+      backgroundColor: "#4e73df",
+      hoverBackgroundColor: "#2e59d9",
+      borderColor: "#4e73df",
+      data:  Object.values(wholeData.totalData),
     }],
   },
   options: {
@@ -110,3 +222,4 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+}

@@ -1,6 +1,6 @@
 package stock_m.dao;
 
-<<<<<<< HEAD
+
 
 import java.util.Map;
 
@@ -15,20 +15,20 @@ import org.apache.ibatis.annotations.Update;
 import stock_m.dto.BroadcastLimitDto;
 import stock_m.dto.BroadcastPriceDto;
 import stock_m.dto.ProductDto;
-=======
+
 import java.util.List;
 
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
->>>>>>> main
+
 
 
 
 @Mapper
 public interface BroadcastDao {
-<<<<<<< HEAD
+
 	/*
 	 * //한도 알림 //한도 입력
 	 * 
@@ -88,11 +88,11 @@ public interface BroadcastDao {
 	/*
 	 * @Delete("delete from product where pno = #{pno}") int deleteBoard(int pno);
 	 */
-=======
+
 	
 	@Select("select userid from pricebroadcast where pno = #{pno} AND param <= #{param}")
 	public List<String> broadPriceCheck(@Param("pno")int pno, @Param("param")int param);
 	
 	
->>>>>>> main
+
 }

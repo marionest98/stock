@@ -10,7 +10,11 @@
   */
 package stock_m.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import jakarta.websocket.server.PathParam;
+
 import stock_m.dto.BuyDto;
 import stock_m.dto.RevenueDto;
 import stock_m.dto.SellDto;
@@ -222,11 +227,50 @@ public class RevenueController {
 						 
 						}				
 							
+						  //chart
 						
-						@GetMapping("/company/cr")
-                      public String chartr() {
-							
-							
-							return"/company/cr";
+						@GetMapping("company/cr")
+                      public String chartr(String userid,Model m) {
+							  userid="1";
+							    Calendar calendar = Calendar.getInstance();
+						        calendar.set(Calendar.YEAR, 2023);
+						        calendar.set(Calendar.MONTH, Calendar.MAY);
+						        calendar.set(Calendar.DAY_OF_MONTH, 15);
+						        
+						        Date date = calendar.getTime();
+						        
+						        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+						        String sdate = dateFormat.format(date);
+						        
+						       // System.out.println(sdate);
+							 //String totalselllist=service.totalsell(userid,sdate);
+							//System.out.println("totalselllist "+totalselllist);
+							//m.addAttribute("totalselllist", totalselllist);
+							return"company/cr";
 						}
+						
+						@GetMapping("company/getsdate")
+						@ResponseBody
+						public  Map<String, Integer> getsdate(@RequestParam("start-date") String startDate,
+                                @RequestParam("end-date") String endDate){
+							
+							//String userid="1";
+							   // startDate="2023-05-15";
+							    //endDate="2023-05-15";
+							  int filteredData = service.getFilteredData(startDate, endDate);
+							  System.out.println(filteredData);
+							  int buyData =service.getbuyData(startDate, endDate);
+							  System.out.println(buyData);
+                              int totalData=service.gettotalData(startDate, endDate);
+                              System.out.println(totalData);
+							    Map<String, Integer> result = new HashMap<>();
+							    result.put("filteredData", filteredData);
+							    result.put("buyData", buyData);
+							    result.put("totalData", totalData);
+							  return result;
+							
+						}
+						 
+
+						
 }

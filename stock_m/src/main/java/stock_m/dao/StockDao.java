@@ -10,18 +10,16 @@
   */
 package stock_m.dao;
 
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
-=======
->>>>>>> main
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Update;
 
 import stock_m.dto.StockDto;
@@ -63,13 +61,7 @@ public interface StockDao {
 
 		//int supdate(String s_volume, String sno);
 		
-=======
-import org.springframework.web.bind.annotation.PathVariable;
->>>>>>> main
 
-
-@Mapper
-public interface StockDao {
 	@Select("select s_val from stock where sno=#{sno}")
 	int selecSval(@Param("sno")int sno);
 	

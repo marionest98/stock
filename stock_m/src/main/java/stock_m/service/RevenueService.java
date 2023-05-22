@@ -10,29 +10,21 @@
   */
 package stock_m.service;
 
-<<<<<<< HEAD
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-=======
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import stock_m.dao.RevenueDao;
 
-@Service
-public class RevenueService {
-	@Autowired
-	RevenueDao dao;
-	
-	public int checks() {
-		return dao.checks();
-	}
->>>>>>> main
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.Data;
 import stock_m.dao.RevenueDao;
 import stock_m.dto.BuyDto;
 import stock_m.dto.RevenueDto;
@@ -50,6 +43,9 @@ import stock_m.dto.StockDto;
 public class RevenueService {
 	@Autowired
 	RevenueDao dao;
+	
+	public int checks() {
+		return dao.checks();}
 	
 	
 	public int insert(SellDto dto) {
@@ -161,5 +157,30 @@ public class RevenueService {
 		// TODO Auto-generated method stub
 		return dao.searchrcontent(search);
 	}
+	
+	//chart
+	
+	public String totalsell(String userid,String sdate) {
+		return dao.totalsell(userid, sdate);
+	}
+
+
+	public int getFilteredData(String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return dao.getFilteredData(startDate, endDate);
+	}
+
+
+	public int getbuyData(String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return dao.getbuyData(startDate, endDate);
+	}
+
+
+	public int gettotalData(String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return dao.gettotalData(startDate, endDate);
+	}
+
 }
 

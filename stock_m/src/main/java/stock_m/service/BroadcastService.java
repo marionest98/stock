@@ -1,29 +1,28 @@
 package stock_m.service;
 
-<<<<<<< HEAD
+
 import java.util.Map;
-=======
+
 import java.util.List;
->>>>>>> main
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import stock_m.dao.BroadcastDao;
-<<<<<<< HEAD
+
 import stock_m.dto.BroadcastLimitDto;
 import stock_m.dto.BroadcastPriceDto;
 import stock_m.dto.ProductDto;
 import stock_m.dto.RevenueDto;
-=======
->>>>>>> main
+
 
 
 @Service
 public class BroadcastService {
 	
 	@Autowired
-<<<<<<< HEAD
+
 	BroadcastDao dao;
 	/*
 	 * public int insert(BroadcastLimitDto dto) { return dao.insert(dto); } public
@@ -72,7 +71,7 @@ public class BroadcastService {
 	/*
 	 * public int deleteBoard(int pno) { return dao.deleteBoard(pno); }
 	 */
-=======
+
 	BroadcastDao Broadcast_dao;
 	
 	public List<String> broadPriceCheck(int pno, int param){
@@ -81,6 +80,6 @@ public class BroadcastService {
 		
 		return userList;
 	}
->>>>>>> main
+
 	
 }

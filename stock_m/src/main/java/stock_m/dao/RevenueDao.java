@@ -10,19 +10,20 @@
   */
 package stock_m.dao;
 
-<<<<<<< HEAD
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
+import lombok.Data;
 import stock_m.dto.BuyDto;
 import stock_m.dto.RevenueDto;
 import stock_m.dto.SellDto;
@@ -101,17 +102,24 @@ public interface RevenueDao {
 	List<StockDto> searchrcontent(String search);
 	 
 	
-//	@Update("update sell set price=#{price} where sno=#{sno}")
-//	int updateSell(int[] sno, int[] pno, int[] price);
-=======
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
-@Mapper
-public interface RevenueDao {
-	
 	@Select("select `limit` from revenue where userid = 'testcompany'")
 	int checks();
  
->>>>>>> main
+	//chart
+	@Select("SELECT SUM(price) AS total_sell FROM sell where userid=#{userid} and sdate=#{sdate}")
+	String totalsell(@Param("userid")String userid, @Param("sdate") String sdate);
+
+	@Select("SELECT SUM(price) AS total_sell FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate}")
+	int getFilteredData(@Param("startDate")String startDate, @Param("endDate") String endDate);
+
+	@Select("SELECT SUM(price) AS total_sell FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate}")
+	int getbuyData(@Param("startDate")String startDate, @Param("endDate")String endDate);
+	
+	@Select(" SELECT (SELECT SUM(price) FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate})-(SELECT SUM(price) FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate}) AS profit")
+	int gettotalData(@Param("startDate")String startDate, @Param("endDate")String endDate);
+	
+	
+	
+
 }
