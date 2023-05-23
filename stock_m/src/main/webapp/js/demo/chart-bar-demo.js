@@ -15,7 +15,10 @@
 
    
 
-        function resetSearch(){location.assign("${pageContext.request.contextPath}/finance/orders")};
+        function resetSearch(){
+			document.getElementById("chartform").reset()
+			//location.assign("/company/getsdate")
+			};
 
         
 
@@ -69,9 +72,18 @@
                 "end-date": end},
                 type: "GET",
             }).done(function(response) {
-			    	 var wholeData = response;
-			    	 updateChart(wholeData);
+				     
+			    	 var parsedResponse = JSON.parse(response);
+                     var filteredData = JSON.parse(parsedResponse.filteredData);
+                     var buyData = JSON.parse(parsedResponse.buyData);
+                     var totalData = JSON.parse(parsedResponse.totalData);
+    
+                     updateChart(filteredData, buyData, totalData);
+                     console.log(filteredData);
+                     console.log(buyData);
+                     console.log(totalData);
 			    	 
+			    	
 			    	});
              
             
@@ -79,9 +91,17 @@
         }
 
        -
-        //$("#saled").empty();
-        //$("#saled").append(table_data);
+        $("#saled").empty();
+       $("#saled").append(table_data);
         
+
+  $("#start-date-input, .test_obj").on("change", function() {
+    if ($("#start-date-input").is(":checked")) {
+      $(".test_obj").prop("checked", false).prop("disabled", true);
+    } else {
+      $(".test_obj").prop("disabled", false);
+    }
+  });
 
     
     
@@ -116,18 +136,34 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Bar Chart Example
 //var= ${}
-function updateChart(wholeData) {
+function updateChart(filteredData, buyData, totalData) {
   var ctx = document.getElementById('myChart');
-  var months = Object.keys(wholeData.totalData);
-//var ctx = document.getElementById("myBarChart");
-//var sellData = document.getElementById("totalselllist").value;
-//var purchasesData = [5312, 6251, 7841];
-//var revenueData = [6251, 7841, 9821];
-console.log(wholeData);
-console.log(wholeData.totalData);
-console.log(wholeData.buyData);
-console.log(wholeData.filteredData);
-console.log(months);
+
+  if (window.myBarChart) {
+	  
+    window.myBarChart.destroy();
+  }
+
+  var months = [];
+  var sellPrices = [];
+  var buyPrices = [];
+  var profits = [];
+  
+  filteredData.forEach(function({ month, sell_price }) {
+    months.push(month);
+    sellPrices.push(sell_price);
+  });
+
+  buyData.forEach(function({ buy_price }) {
+    buyPrices.push(buy_price);
+  });
+
+  totalData.forEach(function({ profit }) {
+    profits.push(profit);
+  });
+
+
+
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
@@ -137,21 +173,21 @@ var myBarChart = new Chart(ctx, {
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: Object.values(wholeData.filteredData),
+      data: sellPrices,
     },
     {
       label: "buy",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data:  Object.values(wholeData.buyData),
+      data:buyPrices,
     },
     {
       label: "profit",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data:  Object.values(wholeData.totalData),
+      data:  profits,
     }],
   },
   options: {
@@ -222,4 +258,5 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+window.myBarChart = myBarChart;
 }

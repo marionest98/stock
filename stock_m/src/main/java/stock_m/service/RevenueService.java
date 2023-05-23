@@ -160,27 +160,27 @@ public class RevenueService {
 	
 	//chart
 	
-	public String totalsell(String userid,String sdate) {
-		return dao.totalsell(userid, sdate);
-	}
+	/*
+	 * public String totalsell(String userid,String sdate) { return
+	 * dao.totalsell(userid, sdate); }
+	 */
 
-
-	public int getFilteredData(String startDate, String endDate) {
+	public List<Map<String, Object>> getFilteredData(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return dao.getFilteredData(startDate, endDate);
 	}
 
 
-	public int getbuyData(String startDate, String endDate) {
+	public List<Map<String, Object>> getbuyData(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return dao.getbuyData(startDate, endDate);
 	}
-
-
-	public int gettotalData(String startDate, String endDate) {
+	
+	public List<Map<String, Object>>  gettotalData(String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		return dao.gettotalData(startDate, endDate);
+		return dao. gettotalData(startDate, endDate);
 	}
 
+	
 }
 

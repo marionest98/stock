@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.MimeMappings.Mapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,10 @@ import stock_m.dto.RevenueDto;
 import stock_m.dto.SellDto;
 import stock_m.dto.StockDto;
 import stock_m.service.RevenueService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Controller
 public class RevenueController {
@@ -251,23 +256,34 @@ public class RevenueController {
 						
 						@GetMapping("company/getsdate")
 						@ResponseBody
-						public  Map<String, Integer> getsdate(@RequestParam("start-date") String startDate,
-                                @RequestParam("end-date") String endDate){
+						public ResponseEntity<String> getsdate(@RequestParam("start-date") String startDate,
+                                @RequestParam("end-date") String endDate)throws JsonProcessingException{
 							
-							//String userid="1";
-							   // startDate="2023-05-15";
-							    //endDate="2023-05-15";
-							  int filteredData = service.getFilteredData(startDate, endDate);
-							  System.out.println(filteredData);
-							  int buyData =service.getbuyData(startDate, endDate);
-							  System.out.println(buyData);
-                              int totalData=service.gettotalData(startDate, endDate);
-                              System.out.println(totalData);
-							    Map<String, Integer> result = new HashMap<>();
-							    result.put("filteredData", filteredData);
-							    result.put("buyData", buyData);
-							    result.put("totalData", totalData);
-							  return result;
+							
+							List<Map<String, Object>> filteredData = service.getFilteredData(startDate, endDate);
+							List<Map<String, Object>> buyData =service.getbuyData(startDate, endDate);
+							List<Map<String, Object>> totalData=service.gettotalData(startDate, endDate);
+							
+							System.out.println(filteredData);
+							System.out.println(buyData);
+							System.out.println(totalData);
+							
+							//json으로 직렬화
+							ObjectMapper om= new ObjectMapper();
+                            
+							//json문자열로 변환
+							String filteredDataJson = om.writeValueAsString(filteredData);
+							String buyDataJson = om.writeValueAsString(buyData);
+							String totalDataJson = om.writeValueAsString(totalData);
+
+							Map<String, String> responseData = new HashMap<>();
+							responseData.put("filteredData", filteredDataJson);
+							responseData.put("buyData", buyDataJson);
+							responseData.put("totalData", totalDataJson);
+							
+							String jsonResponse = om.writeValueAsString(responseData);
+							
+							return ResponseEntity.ok(jsonResponse);
 							
 						}
 						 

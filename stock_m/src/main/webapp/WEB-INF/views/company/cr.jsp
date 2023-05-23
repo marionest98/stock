@@ -353,7 +353,7 @@
                                 </div>
                                 <div> <!--  id="B" --> 
   <div> <!-- style="display:flex; align-items:center;" -->
-  <form action="${pageContext.request.contextPath}/finance/filtered_data_o" method="get">
+  <form id="chartform"action="${pageContext.request.contextPath}/finance/filtered_data_o" method="get">
  <!--  <p><strong>매출 내역</strong></p><br> -->
     <table id="data-table">
       <tr>
@@ -377,11 +377,13 @@
     <input type="radio" name="date" value="1year">
     <span>1년</span>
 </label>
+
  <label for="start-date-input"></label>
 <input type="date" id="start-date-input" name="start-date" min="2021-01-01" max="" value="" required>
 
 <label for="end-date-input"><a id="P">~</a></label>
 <input type="date" id="end-date-input" name="end-date" min="" max="" value="" required>
+<button type="button" class="resetButton" onclick="resetSearch()">X</button>
 <button type="button" id="myButton" onclick="search()">검색 </button>
                                         
                                     </div>
@@ -389,8 +391,8 @@
                                     <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                                         <canvas id="myChart" width="571" height="400" style="display: block; height: 320px; width: 457px;" class="chartjs-render-monitor"></canvas>
                                         <input type="hidden" id="totalselllist" value="${totalselllist}" />
-                                        
-                                         
+                                        </table>
+                                         </form>
 
                                     <hr><font _mstmutation="1" _msttexthash="215074457" _msthash="62"> 막대 차트의 스타일은 파일에서 찾을 수 있습니다. </font><code>/js/demo/chart-bar-demo.js</code></div>
                             </div>
@@ -460,7 +462,7 @@
     <script src="../../../js/demo/chart-pie-demo.js"></script>
     <script src="../../../js/demo/chart-bar-demo.js"></script>
 
-
+    
 
 </body>
 

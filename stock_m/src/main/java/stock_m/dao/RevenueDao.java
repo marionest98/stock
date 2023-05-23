@@ -107,18 +107,21 @@ public interface RevenueDao {
 	int checks();
  
 	//chart
-	@Select("SELECT SUM(price) AS total_sell FROM sell where userid=#{userid} and sdate=#{sdate}")
-	String totalsell(@Param("userid")String userid, @Param("sdate") String sdate);
+	@Select("SELECT MONTH(sdate) AS month, SUM(price) AS sell_price FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)")
+	List<Map<String, Object>> getFilteredData(@Param("startDate")String startDate, @Param("endDate")String endDate);
 
-	@Select("SELECT SUM(price) AS total_sell FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate}")
-	int getFilteredData(@Param("startDate")String startDate, @Param("endDate") String endDate);
 
-	@Select("SELECT SUM(price) AS total_sell FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate}")
-	int getbuyData(@Param("startDate")String startDate, @Param("endDate")String endDate);
+	@Select("SELECT MONTH(bdate) AS month, SUM(price) AS buy_price FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)")
+	List<Map<String, Object>> getbuyData(@Param("startDate")String startDate, @Param("endDate")String endDate);
+
+	@Select("SELECT s.month, (s.total_price - b.total_price) AS profit FROM"
+			+ "  (SELECT MONTH(sdate) AS month, SUM(price) AS total_price FROM sell WHERE sdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)) AS s "
+			+ "JOIN "
+			+ "  (SELECT MONTH(bdate) AS month, SUM(price) AS total_price FROM buy WHERE bdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)) AS b "
+			+ "ON s.month = b.month")
+	List<Map<String, Object>>gettotalData(@Param("startDate")String startDate, @Param("endDate")String endDate);
 	
-	@Select(" SELECT (SELECT SUM(price) FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate})-(SELECT SUM(price) FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate}) AS profit")
-	int gettotalData(@Param("startDate")String startDate, @Param("endDate")String endDate);
-	
+
 	
 	
 
