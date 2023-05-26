@@ -116,48 +116,62 @@ var myPieChart = new Chart(ctx, {
  appendToCanvas(ctx, scontents, backgroundColors);
 }
 //1차
-// Canvas에 동적으로 추가하는 함수
 function appendToCanvas(ctx, scontents, backgroundColors) {
     var chartPie = ctx.parentNode;
 
     for (var i = 0; i < scontents.length; i++) {
-      var span = document.createElement("span");
-      span.className = "mr-2";
+        var span = document.createElement("span");
+        span.className = "mr-2";
 
-      var icon = document.createElement("i");
-      icon.className = "fas fa-circle";
-      icon.style.color = backgroundColors[i];
+        var icon;
 
-      var text = document.createTextNode(scontents[i]);
+        if (scontents[i] === "딸기") {
+            // 딸기 이미지 생성
+            icon = document.createElement("img");
+            icon.src = "../../../market/img/cart/strawberry.jpg";
+            icon.style.width = "16px";
+            icon.style.height = "16px";
 
-      span.appendChild(icon);
-      span.appendChild(text);
+            // 이미지 색상 추출
+            var extractedColor = extractColorFromImage(icon);
 
-      chartPie.appendChild(span);
+            // 추출한 색상을 배경색으로 설정
+            if (extractedColor) {
+                backgroundColors[i] = extractedColor;
+            }
+        } else {
+            icon = document.createElement("i");
+            icon.className = "fas fa-circle";
+            icon.style.color = backgroundColors[i];
+        }
+
+        var text = document.createTextNode(scontents[i]);
+
+        span.appendChild(icon);
+        span.appendChild(text);
+
+        chartPie.appendChild(span);
     }
-  }
-
-  // JSP로부터 전달된 값으로 Canvas에 동적으로 추가
- 
-
-
-// 색상을 동적으로 반환하는 함수
-function generateColors(length) {
-  
-  
- var colors = [
-    '#4e73df','#224abe','#13855c','#1cc88a', '#36b9cc', '#258391','#f6c23e','#dda20a', '#e74a3b','#e74a3b'
-  ];
-  var backgroundColors = [];
-  for (var i = 0; i < length; i++) {
-   var colorIndex = i % colors.length;
-    backgroundColors.push(colors[colorIndex]);
-  }
-  
-  return backgroundColors;
-
 }
 
+function extractColorFromImage(image) {
+    var canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    var context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0);
+
+    // 이미지에서 중심 픽셀의 색상 추출
+    var centerX = Math.floor(image.width / 2);
+    var centerY = Math.floor(image.height / 2);
+    var pixelData = context.getImageData(centerX, centerY, 1, 1).data;
+
+    // 추출한 색상을 RGB 형식으로 변환
+    var extractedColor = "rgb(" + pixelData[0] + ", " + pixelData[1] + ", " + pixelData[2] + ")";
+
+    return extractedColor;
+}
 
 
 
