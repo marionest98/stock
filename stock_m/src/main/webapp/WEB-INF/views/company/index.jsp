@@ -379,11 +379,7 @@
 										<canvas id="myPieChart"></canvas>
 									</div>
 									<div class="mt-4 text-center small">
-									<c:forEach items="${stockList}" var="s">
-                                        <span class="mr-2" ><i
-											class="fas fa-circle text-primary" value="${s.sno}"></i>${s.scontent}</span>
-                                                      </c:forEach>
-										
+									  
 									</div>
 								</div>
 							</div>

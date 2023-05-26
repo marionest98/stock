@@ -419,14 +419,14 @@
                   <td><input type="text" id="s_val_${stock.s_val}" value="${stock.s_val}" name="s_val" readonly></td>
 						<td><input type="text" id="sno_${stock.sno}" value="${stock.sno}" name="sno" readonly></td><!-- 상세보기 -->
 						<td><input type="text" id="s_volume_${stock.s_volume}" value="${stock.s_volume}" name="s_volume" readonly></td>
-						<td><button type="button" id="${stock.sno}" onclick="up(this)">저장</button>
+						<td>
                             <button type="button" id="${stock.sno}" onclick="dc(this)">삭제</button></td>
 					</tr>
 				
 				</c:forEach>
 				</form>
                                     </tbody>
-                                    <button type="submit"> 통합수정</button>
+                                   
 				                    <button onclick="delcheckit()">통합삭제</button>
                                 </table>
                                 </form>

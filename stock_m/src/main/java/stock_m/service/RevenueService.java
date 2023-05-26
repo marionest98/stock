@@ -155,20 +155,35 @@ public class RevenueService {
 		 * dao.totalsell(userid, sdate); }
 		 */
 
-		public List<Map<String, Object>> getFilteredData(String startDate, String endDate) {
-			// TODO Auto-generated method stub
-			return dao.getFilteredData(startDate, endDate);
+		public List<Map<String, Object>> getFilteredData(String startDate, String endDate, String userid) {
+			 Map<String, Object> m = new HashMap<>();
+				
+				m.put("userid", userid);
+				m.put("startDate",startDate);
+				m.put("endDate", endDate);
+				
+			return dao.getFilteredData(m);
 		}
 
 
-		public List<Map<String, Object>> getbuyData(String startDate, String endDate) {
-			// TODO Auto-generated method stub
-			return dao.getbuyData(startDate, endDate);
+		public List<Map<String, Object>> getbuyData(String startDate, String endDate, String userid) {
+			 Map<String, Object> m = new HashMap<>();
+				
+				m.put("userid", userid);
+				m.put("startDate",startDate);
+				m.put("endDate", endDate);
+				
+			return dao.getbuyData(m);
 		}
 		
-		public List<Map<String, Object>>  gettotalData(String startDate, String endDate) {
-			// TODO Auto-generated method stub
-			return dao. gettotalData(startDate, endDate);
+		public List<Map<String, Object>>  gettotalData(String startDate, String endDate, String userid) {
+			 Map<String, Object> m = new HashMap<>();
+				
+				m.put("userid", userid);
+				m.put("startDate",startDate);
+				m.put("endDate", endDate);
+				
+			return dao. gettotalData(m);
 		}
 
 

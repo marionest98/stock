@@ -612,166 +612,120 @@ $.ajax({
  
 		})
 	}*/
-	function totaldel(obj){
-		var element = document.getElementById("test_check");
-		 var no=obj.getAttribute("id");
-		 var kind=obj.getAttribute("title");
-			console.log(no);
-			console.log(kind);
-		 if(obj.getAttribute("title") == "판매"){
-			
-
-			 var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-			    var selectedItems = [];
-		        console.log(selectedItems);
-			    checkboxes.forEach(function (checkbox) {
-			      selectedItems.push(checkbox.value);
-			    });
-			    $.ajax({
-			    	  type: "GET",
-			    	  url: "/company/rcheckdelete",
-			    	  data: { selectedItems: selectedItems },
-			    	}).done(function() {
-			    	  document.location.reload();
-			    	});
-			}
-			else{
-				var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-			    var selectedItems = [];
-		        
-			    checkboxes.forEach(function (checkbox) {
-			      selectedItems.push(checkbox.value);
-			     
-			    });
-			    $.ajax({
-			    	  type: "GET",
-			    	  url: "/company/revsellcheckdel",
-			    	  data: { selectedItems: selectedItems },
-			    	}).done(function() {
-			    		 
-			    	  document.location.reload();
-			    	 
-			    	});
-	    
-	  } 
-	}
-	
-	//구매체크 삭제
-	  function delcheckit(obj) {
-	    var checkboxes = document.querySelectorAll('input[name="buy_check"]:checked');
-	    var selectedItems = [];
-        
-	    checkboxes.forEach(function (checkbox) {
-	      selectedItems.push(checkbox.value);
-	     
-	    });
-	    $.ajax({
-	    	  type: "GET",
-	    	  url: "/company/rcheckdelete",
-	    	  data: { selectedItems: selectedItems },
-	    	}).done(function() {
-	    		 
-	    	  document.location.reload();
-	    	 
-	    	});
-	    
-	}
-	//판매체크 삭제
-	function delchecksell(obj) {
-	    var checkboxes = document.querySelectorAll('input[name="sell_check"]:checked');
-	    var selectedItems = [];
-        console.log(selectedItems);
-	    checkboxes.forEach(function (checkbox) {
-	      selectedItems.push(checkbox.value);
-	    });
-	    $.ajax({
-	    	  type: "GET",
-	    	  url: "/company/revsellcheckdel",
-	    	  data: { selectedItems: selectedItems },
-	    	}).done(function() {
-	    	  document.location.reload();
-	    	});
-	    
-	  } 
-	
-	   function upcheckit(button) {
-		 
-		   
-		    var checkboxes = document.querySelectorAll('input[name="test_check"]:checked');
+	function totaldel(obj) {
+		  var element = document.getElementById("test_check");
+		  var no = obj.getAttribute("id");
+		  var kind = obj.getAttribute("title");
+		  console.log(no);
+		  console.log(kind);
+		  if (obj.getAttribute("title") == "판매") {
+		    var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 		    var selectedItems = [];
-		  
-		   
-		   
-		    checkboxes.forEach(function (checkbox) {
+		    console.log(selectedItems);
+		    checkboxes.forEach(function(checkbox) {
 		      selectedItems.push(checkbox.value);
-		      
 		    });
 		    $.ajax({
-		    	  type: "GET",
-		    	  url: '/company/rcheckupdate',
-		    	  data:  { selectedItems: selectedItems },
-		                      
-		    	}).done(function() {
-		    	  document.location.reload();
-		    	});
-		    
-		  } 
-	   
-	    function nodelete(obj){
-		 var no=obj.getAttribute("id");
-		 var kind=obj.getAttribute("title");
-			console.log(no);
-			console.log(kind);
-		 if(obj.getAttribute("title") == "판매"){
-			 $.ajax({
-				  type: "GET",
-				  url: "/company/revselldel",
-				  data: {"sno":no}
-					
-				  
-				}).done(function(){
-					 //$("#sbchange").val("buy");
-					 alert(no);
-			        alert(kind);
-					document.location.reload();
-					 
+		      type: "GET",
+		      url: "/company/rcheckdelete",
+		      data: { selectedItems: selectedItems },
+		    }).done(function() {
+		      document.location.reload();
+		    });
+		  } else {
+		    var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+		    var selectedItems = [];
+		    checkboxes.forEach(function(checkbox) {
+		      selectedItems.push(checkbox.value);
+		    });
+		    $.ajax({
+		      type: "GET",
+		      url: "/company/revsellcheckdel",
+		      data: { selectedItems: selectedItems },
+		    }).done(function() {
+		      document.location.reload();
+		    });
+		  }
+		}
 
-				})
-			}
-			else{
-				$.ajax({
-				      type: "GET",
-				      url: "/company/rdelete",
-				      data: {"bno":no}
-				   	
-				      
-				    }).done(function(){
-				    	alert(no);
-						alert(kind);
-				    	 //$("#sbchange").val("buy");
-				    		document.location.reload();
-				    	 
+		// 구매체크 삭제
+		function delcheckit(obj) {
+		  var checkboxes = document.querySelectorAll('input[name="buy_check"]:checked');
+		  var selectedItems = [];
+		  checkboxes.forEach(function(checkbox) {
+		    selectedItems.push(checkbox.value);
+		  });
+		  $.ajax({
+		    type: "GET",
+		    url: "/company/rcheckdelete",
+		    data: { selectedItems: selectedItems },
+		  }).done(function() {
+		    checkboxes.forEach(function(checkbox) {
+		      var row = checkbox.closest("tr"); // 체크박스가 속한 행(row)을 찾습니다.
+		      row.remove(); // 행을 삭제합니다.
+		    });
+		  });
+		}
 
-				})
-				
-				
-			} 
+		// 판매체크 삭제
+		function delchecksell(obj) {
+		  var checkboxes = document.querySelectorAll('input[name="sell_check"]:checked');
+		  var selectedItems = [];
+		  console.log(selectedItems);
+		  checkboxes.forEach(function(checkbox) {
+		    selectedItems.push(checkbox.value);
+		  });
+		  $.ajax({
+		    type: "GET",
+		    url: "/company/revsellcheckdel",
+		    data: { selectedItems: selectedItems },
+		  }).done(function() {
+		    document.location.reload();
+		  });
+		}
 
-	$.ajax({
-	      type: "GET",
-	      url: "/company/rdelete",
-	      data: {no:no}
-	   	
-	      
-	    }).done(function(){
-	    	 //$("#sbchange").val("buy");
-	    	document.location.reload();
-	    	 
+		function upcheckit(button) {
+		  var checkboxes = document.querySelectorAll('input[name="test_check"]:checked');
+		  var selectedItems = [];
+		  checkboxes.forEach(function(checkbox) {
+		    selectedItems.push(checkbox.value);
+		  });
+		  $.ajax({
+		    type: "GET",
+		    url: "/company/rcheckupdate",
+		    data: { selectedItems: selectedItems },
+		  }).done(function() {
+		    document.location.reload();
+		  });
+		}
 
-	})
-		   
-	   } 
-	  
+		function nodelete(obj) {
+		  var no = obj.getAttribute("id");
+		  var kind = obj.getAttribute("title");
+		  console.log(no);
+		  console.log(kind);
+		  if (obj.getAttribute("title") == "판매") {
+		    $.ajax({
+		      type: "GET",
+		      url: "/company/revselldel",
+		      data: { "sno": no },
+		    }).done(function() {
+		      alert(no);
+		      alert(kind);
+		      document.location.reload();
+		    });
+		  } else {
+		    $.ajax({
+		      type: "GET",
+		      url: "/company/rdelete",
+		      data: { "bno": no },
+		    }).done(function() {
+		      alert(no);
+		      alert(kind);
+		      document.location.reload();
+		    });
+		  }
+		}
 	  /*  function checksnb(button) {
 			
 
@@ -939,7 +893,7 @@ $.ajax({
 	     	    			str += "<td>"+response[rb]["bdate"]+"</td>"
 	     	    		          +"<td>"+response[rb]["bno"]+"</td>"
 	     	    		          +"<td>"+"구매"+"</td>"
-	     	    		          +"<td>"+response[rb]["pname"]+"</td>"
+	     	    		          +"<td>"+response[rb]["acontent"]+"</td>"
 	     	    		         +"<td>"+response[rb]["price"]+"</td>"
 	     	    		        +"<td>"+response[rb]["bcount"]+"</td>"
 	     	    		      str += "<td><button type='button' id= "+response[rb]["bno"]+" onclick=dc(this)>삭제</button></td>";

@@ -88,8 +88,8 @@ public class StockController {
 
 					  
 					  @GetMapping("/company/sinsert") 
-					  public String swrite(@Param("s_val") int s_val,@Param("userid") String userid ,@Param("scontent")String scontent ,@Param("s_volume")int s_volume ) {
-						 userid="1";
+					  public String swrite(@Param("s_val") int s_val,HttpSession session ,@Param("scontent")String scontent ,@Param("s_volume")int s_volume ) {
+						  String userid = (String)session.getAttribute("userid");
 					  service.sinsert(scontent,s_val,userid,s_volume); 
 					  return "redirect:/company/stockmanage"; }
 					 
