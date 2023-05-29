@@ -451,6 +451,8 @@
                                     </form>
                                       <form action='/company/sellinsert'  id='sellinsert' >
                                     </form>
+                                    <form action='/company/deletesell' id='deletesell'>
+                                    </form>
                             <button onclick='totaldel(this)'>통합삭제</button>
                                 </c:if>
                                 <c:if test="${count == 0 }">
@@ -849,18 +851,20 @@ $.ajax({
 	     	    		
 	     	    		 var sts="";
 	     	    		 sts+= "<button onclick='delchecksell(this)'>판매통합삭제</button>"
-     	    	    	 sts +=  "<tr>"
-     	    	    		sts +=  "<th><button type='button' id='plus' >+</button></th>"
-     	    	    			sts += "<th></th>"
-     	    	    				sts += "<th></th>"
-     	    	    					sts += "<th>판매</th>"
-     	    	    						sts += "<th><input type='text' name='pno'></th>"
-     	    	    							sts += "<th><input type='text' name='price'></th>"
-     	    	    								sts +="<th><input type='text' name='scount'></th>"
-     	    	    									sts +="<th><input type='submit' value='입력'> </th>"
-     	    	    										sts += "</tr>"
-     	    	    											
-     	    		   $("#sellinsert").html(sts);
+	     	    		 var stb="";
+	     	    		stb +=  "<tr>"
+	     	    			stb +=  "<th><button type='button' id='plus' >+</button></th>"
+	     	    				stb += "<th></th>"
+	     	    					stb += "<th></th>"
+     	    	    					stb += "<th>판매</th>"
+     	    	    						stb += "<th><input type='text' name='pno'></th>"
+     	    	    							stb += "<th><input type='text' name='price'></th>"
+     	    	    								stb +="<th><input type='text' name='scount'></th>"
+     	    	    									stb +="<th><input type='submit' value='입력'> </th>"
+     	    	    										stb += "</tr>"
+     	    	    	
+     	    	    	$("#deletesell").html(sts)									
+     	    		   $("#sellinsert").html(stb);
 	     	    		
 	     	    	   
 	     	    		});//done
