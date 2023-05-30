@@ -59,12 +59,14 @@ public class StockController {
 	
 	@PostMapping("/company/checks")
 	@ResponseBody
-	public boolean checks(int s_price, String scontent, @RequestParam("s_volume") int s_volume, int s_val ,HttpSession session) {
-		String userid = (String) session.getAttribute("userid"); 
+	public boolean checks(int s_price, String scontent, @RequestParam("s_volume") int s_volume,int s_val, int ano ,HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		// 유저 아이디를 가져가 유저의 잔고를 확인 함
 		int a = r_service.checks(userid);
 		System.out.println(a);
+		// 총 가격 정보와 유저의 잔고를 비교하여 실행
 		if(a> s_price) {
-			service.checki(s_price,scontent, s_volume, s_val,userid);
+			service.checki(s_price,scontent, s_volume,s_val, ano,userid);
 			return true;
 		}else {
 			return false;
@@ -134,6 +136,7 @@ public class StockController {
 							}
 						
 							m.addAttribute("count", count);
+							m.addAttribute("uid", userid);
 							
 							return "company/stockmanage";
 						}
@@ -166,6 +169,7 @@ public class StockController {
 							  List<StockDto> sList=service.searchscontent(search,userid);
 							  m.addAttribute("stockList",sList);
 							  m.addAttribute("search", search);
+							  m.addAttribute("uid", userid);
 							  System.out.println("검색 결과 "+sList);
 							 
 						   return "company/search";
@@ -239,14 +243,14 @@ public class StockController {
 		
 		
 		@GetMapping("company/cs")
-        public String chartr(HttpSession session,Model m) {
-			
+        public String chartr(HttpSession session,Model m) {			
 			String userid = (String) session.getAttribute("userid");
 			List<Map<String, Object>> stockList = service.getstockoption(userid);
-			 m.addAttribute("stockList",stockList);
+			m.addAttribute("stockList",stockList);
+			m.addAttribute("uid", userid);
 			       
-				return"company/cs";
-			}
+			return"company/cs";
+		}
 		
 		@GetMapping("company/getstock")
 		@ResponseBody

@@ -90,16 +90,14 @@ public interface StockDao {
 			@Select("select sno,scontent from stock where userid=#{userid}")
 			List<Map<String, Object>> getstockoption(String userid);
 
-			@Select("select count(sno) as sc,sdate from sell where pno=(select product.pno from product,stock where stock.sno=product.sno and stock.sno=#{sno} and userid=#{userid})  group by sdate order by sdate")
+			@Select("select sum(scount) as sc,sdate from sell where pno=(select product.pno from product,stock where stock.sno=product.sno and stock.sno=#{sno} and userid=#{userid})and userid=#{userid} group by sdate order by sdate")
 			List<Map<String, Object>> getsellcount(Map<String, Object> m);
 			
-			@Select("select count(bno) as bc,bdate from buy where pno=(select product.pno from product,stock where stock.sno=product.sno and stock.sno=#{sno}  and userid=#{userid}) group by bdate order by bdate")
+			@Select("select sum(bcount) as bc,bdate from buy where pno=(select a.ano from adminstock a ,stock s where s.sno=a.ano and s.sno=#{sno} and userid=#{userid})and userid=#{userid} group by bdate order by bdate")
 			List<Map<String, Object>> getbuycount(Map<String, Object> m);
 
 			
-			 
-			
-			
+
 			
 		//@Insert("insert into stock(userid, s_val, scontent, s_volume, s_date) values('testcompany6',1,#{scontent},#{s_volume},#{s_date})")
 		//int (@Param("scontent") String scontent, @Param("s_volume") int s_volume, @Param("s_date") String s_date);

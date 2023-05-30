@@ -48,6 +48,19 @@ public class RevenueService {
 		 // public int updateRefOne(SellDto dto) { 
 			//  return dao.updateRefOne(dto); }
 		
+		public int deletemix(String k,int no) {
+			
+			if(k.equals("판매")) {
+				int sno=no;
+				return dao.deletesell(sno);
+			}
+			else if(k.equals("구매")) {
+				int bno=no;
+				return dao.deleteRef(bno);
+			}
+			return 0;
+			
+		}
 		public int deletesell(int sno) {
 			return dao.deletesell(sno);
 		}
@@ -63,7 +76,9 @@ public class RevenueService {
 			return dao.boardList(m);
 		}
 		public int count() {
-			return dao.count();
+			int a =dao.count();
+			int b =dao.countb();
+			return a+b;
 		}
 		public List<Map<String, Object>> sellList(String userid){
 			
@@ -144,9 +159,11 @@ public class RevenueService {
 			return dao.totalList(userid);
 		}
 		public List<StockDto> searchrcontent(String search) {
-			// TODO Auto-generated method stub
+			
 			return dao.searchrcontent(search);
 		}
+
+	   
 		
 		//chart
 		

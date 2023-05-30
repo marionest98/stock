@@ -31,15 +31,18 @@ import stock_m.dto.StockDto;
 @Mapper
 public interface RevenueDao {
 
+	//userid의 현재 잔고를 확인
 	@Select("select profit from revenue where userid =#{userid}")
 	int checks(String userid);
-
+	
+	//userid의 정보를 가지고 장부 테이블의 잔고를 업데이트
 	@Update("UPDATE revenue SET profit=profit-#{s_price} WHERE userid = #{userid}")
 	int updater(@Param("s_price") int s_price, @Param("userid") String userid);
-
-	@Insert("insert into buy(pno,userid,bdate,price,bcount) values(#{s_val},#{userid},#{s_date},#{s_price},#{s_volume})")
-	int insertb(@Param("s_val") int s_val, @Param("userid") String userid, @Param("s_date") String s_date,
-			@Param("s_price") int s_price,@Param("s_volume")int s_volume);
+	
+	//구매가 이루어진다면 해당 param 값들을 이용해 저장
+	@Insert("insert into buy(pno,userid,bdate,price) values(#{ano},#{userid},#{s_date},#{s_price})")
+	int insertb(@Param("ano") int ano, @Param("userid") String userid, @Param("s_date") String s_date,
+			@Param("s_price") int s_price);
 
 	@Insert("insert into sell (sno,userid,pno,sdate,price,scount) values(#{sno},#{userid},#{pno},#{sdate},#{price},#{scount})")
 	int insert(SellDto dto);
@@ -58,13 +61,16 @@ public interface RevenueDao {
 
 	@Select("select count(*) from sell")
 	int count();
+	
+	@Select("select count(*) from buy")
+	int countb();
 
 	@Insert("insert into sell (sno, pno, userid,sdate,price,scount) values(#{sno}, #{pno}, #{userid}, now(),#{price} #{scount}")
 	int rinsert(BuyDto dto);
 	
 	
 
-	@Select("select s.sno, p.pname, DATE_FORMAT(s.sdate, \"%Y/%m/%d\")as sdate, s.price, s.scount from sell s, product p where s.pno=p.pno and userid=#{userid}")
+	@Select("select s.sno, p.pname, DATE_FORMAT(s.sdate, \"%Y/%m/%d\")as sdate, s.price, s.scount from sell s, product p where s.pno=p.pno and userid=#{userid} order by s.sdate desc , s.sno")
 	List<Map<String, Object>> sellList(String userid);
 
 	@Select("select * from sell where sno = #{sno}") // 글번호가 같다면 전부 select
@@ -79,7 +85,7 @@ public interface RevenueDao {
 	int rbuyinsert(BuyDto dto);
 	
 
-	@Select("select b.bno, a.acontent ,DATE_FORMAT(b.bdate, \"%Y/%m/%d\") as bdate, b.price, b.bcount from buy b, adminstock a where a.ano = b.pno and userid=#{userid} order by b.bdate , b.bno")
+	@Select("select b.bno, a.acontent ,DATE_FORMAT(b.bdate, \"%Y/%m/%d\") as bdate, b.price, b.bcount from buy b, adminstock a where a.ano = b.pno and userid=#{userid} order by b.bdate desc , b.bno")
 	List<Map<String, Object>> rbuyList(String userid);
 
 	@Update("update buy set price=#{price} where bno=#{bno}")
@@ -100,7 +106,7 @@ public interface RevenueDao {
 	@Delete("delete from sell where sno=#{sno}")
 	int deletesell(int sno);
 
-	@Select("select s.sno as no, p.pname,DATE_FORMAT(s.sdate, \"%Y/%m/%d\") as 'date', p.price, s.scount as count ,'판매' as kind  from sell s, product p  where s.pno=p.pno union select b.bno as no, p.pname, DATE_FORMAT(b.bdate, \"%Y/%m/%d\") as 'date', p.price, b.bcount as count ,'구매' as kind  from buy b, product p  where b.pno=p.pno  and userid =#{userid} order by date")
+	@Select("select s.sno as no, p.pname,DATE_FORMAT(s.sdate, \"%Y/%m/%d\") as 'date', p.price, s.scount as count ,'판매' as kind  from sell s, product p  where s.pno=p.pno union select b.bno as no, p.pname, DATE_FORMAT(b.bdate, \"%Y/%m/%d\") as 'date', p.price, b.bcount as count ,'구매' as kind  from buy b, product p  where b.pno=p.pno  and userid =#{userid} order by date desc, no desc")
 	List<Map<String, Object>> totalList(String userid);
 
 	@Select("select *from sell,buy where pname=#{search}")
@@ -123,10 +129,11 @@ public interface RevenueDao {
 			+ "ON s.month = b.month")
 	List<Map<String, Object>> gettotalData(Map<String, Object> m);
 
-	@Select("select count(bno) as bc, bdate from buy where userid=#{userid} group by bdate")
+	@Select("select sum(bcount) as bc, bdate from buy where userid=#{userid} group by bdate")
 	List<Map<String, Object>> getmainbuydata(String userid);
 	
-	@Select("select count(sno) as sc, sdate from sell where userid=#{userid} group by sdate")
+	@Select("select sum(scount) as sc, sdate from sell where userid=#{userid} group by sdate")
 	List<Map<String, Object>> getmainselldata(String userid);
+	
 
 }

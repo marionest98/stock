@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 
@@ -81,6 +82,7 @@ public class RevenueController {
 				
 			int perPage = 10; // 한 페이지에 보일 글의 갯수
 			int startRow = (page - 1) * perPage;//0부터시작하기 때문에 1뺌
+			
 			
 			  List<SellDto> rlist = service.selectOne(userid); 
 			  m.addAttribute("rlist",rlist);
@@ -155,11 +157,33 @@ public class RevenueController {
 			  
 			  @GetMapping("/company/revsellcheckdel")
 			  public String revsellcheckdel(@RequestParam("selectedItems[]") int[] selectedItems) {
+				  
+				  
 			    for (int selectedItem : selectedItems) {
 			      int sno = selectedItem;
+			     
 			      System.out.println(sno);
 			      service.deletesell(sno);
 			    }
+			    return "redirect:/company/rsell";
+			  }
+			  
+			  @GetMapping("/company/revmixdel")
+			  public String revsellcheckdel(@RequestParam("selectedItems[]") int[] selectedItems,@RequestParam("kind[]") String[] kind) {
+				  
+				  for (String k: kind) {
+				      
+				      System.out.println("kind"+k);
+				      //service.deletesell(sno);
+				      for (int selectedItem : selectedItems) {
+					      int no = selectedItem;
+					     
+					      System.out.println(no);
+					      service.deletemix(k,no);
+					    }
+				    }
+			   
+			    
 			    return "redirect:/company/rsell";
 			  }
 			  @RequestMapping("/company/rbuy")
@@ -185,6 +209,7 @@ public class RevenueController {
 				  
 				  @GetMapping("/company/revbuycheckdel")
 				  public String revbuycheckdel(@RequestParam("selectedItems[]") int[] selectedItems) {
+
 				    for (int selectedItem : selectedItems) {
 				      int bno = selectedItem;
 				      System.out.println(bno);
@@ -227,17 +252,17 @@ public class RevenueController {
 							 
 						   return "/company/search";
 						 
-						}				
+						}	
+						  
 							
 					//chart
 						
-					@GetMapping("company/cr")
-                      public String chartr(HttpSession session,Model m) {
-						String userid = (String) session.getAttribute("userid");
+					
+					  @GetMapping("company/cr") public String chartr(HttpSession session,Model m) {
+					  String userid = (String) session.getAttribute("userid"); return"company/cr";
+					  }
+					 
 						
-						       
-							return"company/cr";
-						}
 						
 						@GetMapping("company/getsdate")
 						@ResponseBody

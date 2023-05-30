@@ -52,21 +52,19 @@ public class StockService {
 
 
 
-	public int checki(int s_price, String scontent, int s_volume, int s_val, String userid) {
-		System.out.println(userid);
+	public int checki(int s_price, String scontent, int s_volume,int s_val, int ano, String userid) {
 		int s = dao.checki(scontent,userid);
-		System.out.println(s);
 		if(s>0) {
 			Date now = new	 Date();
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-			rdao.insertb(s_val,userid,format.format(now),s_price,s_volume);
+			rdao.insertb(ano,userid,format.format(now),s_price);
 			rdao.updater(s_price,userid);
-			 return dao.updates(scontent,s_volume,s_val,userid);
+			 return dao.updates(scontent,s_volume,ano,userid);
 		}else {
 			Date now = new	 Date();
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 			rdao.updater(s_price,userid);
-			rdao.insertb(s_val,userid,format.format(now),s_price,s_volume);
+			rdao.insertb(ano,userid,format.format(now),s_price);
 			return dao.inserts(scontent,s_volume,format.format(now), s_val,userid);
 		}
 	}
@@ -145,21 +143,10 @@ public class StockService {
 			}
 
 
-
-			
-
-
-			
-
-
-
 			public List<Map<String, Object>> getstockoption(String userid) {
 				
 				return dao.getstockoption(userid);
 			}
-
-
-
 
 
 			public List<Map<String, Object>> getsellcount(String userid, int sno) {
