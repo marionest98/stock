@@ -243,8 +243,7 @@ public class RevenueController {
 						  @GetMapping("company/rsearch")
 						  public String searchrcontent(String search,Model m) {
 							  System.out.println(search);
-	                          String userid="1";
-							 // List<StockDto> stockList = service.sList(userid); 
+	                         
 							  
 							  List<StockDto> sList=service.searchrcontent(search);
 							  m.addAttribute("stockList",sList);

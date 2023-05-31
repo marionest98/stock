@@ -442,6 +442,7 @@
                                    
                                 </table>
                                  
+                                 
                                    <form action='/company/buyinsert'  id='buyinsert' >
                                     </form>
                                       <form action='/company/sellinsert'  id='sellinsert' >
@@ -517,6 +518,7 @@
 	  })
 	} */
 	$(document).ready(function() {
+		
 		  $("#buychecksellbutton").css("display", "none");
 		  $("#sellinsert").css("display", "none");
 		  $("#buycheckdelbutton").css("display", "none");
@@ -562,6 +564,7 @@
 		    return /^\d+$/.test(value);
 		  }
 		});
+	
 	
 	 function selectAll(selectAll){
 		  const checkboxes 
@@ -744,7 +747,7 @@ $.ajax({
 		}
 	
           //option 선택
-		  $("#sbchange").change(function(event){
+		$("#sbchange").change(function(event){
 			   if($(this).val() == "snb"){
 				   $.ajax({
 				    	  type: "GET",
@@ -753,7 +756,7 @@ $.ajax({
 				                      
 				    	}).done(function(response) {
 				    		
-				    		$("#sbchange").val("total");
+				    		//$("#sbchange").val("total");
 				    		console.log("totalList");
 				    		$("input:checkbox[id='checkall']").prop("checked", false);
 				    		
@@ -785,7 +788,7 @@ $.ajax({
 				    		 
 				    		
 				    	});
-	           } else if($(this).val() == "sell"){
+	           }else if($(this).val() == "sell"){
 	        	   
 	        	   $.ajax({
 	 		    	  type: "GET",
@@ -906,7 +909,8 @@ $.ajax({
 	           }//else if
 		   
 		   })//function 
-		   
+
+
 	  </script>
 	  
 	  
