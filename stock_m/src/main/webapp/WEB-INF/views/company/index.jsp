@@ -326,7 +326,17 @@
 								<!-- Card Body -->
 								<div class="card-body">
 									<div class="chart-area">
+									 <span class="mr-2">
+                                            <i class="fas fa-circle" style="color: rgba(78, 115, 223, 1);"></i> 판매량
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle" style="color: rgba(231, 76, 60, 1);"></i> 구매량 
+                                        </span>
 										<canvas id="mymainChart"></canvas>
+										<div class="mt-4 text-center small">
+                                       
+                                       
+                                    </div>
 									</div>
 								</div>
 							</div>

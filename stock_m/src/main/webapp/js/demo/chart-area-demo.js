@@ -241,6 +241,7 @@ function getmaininfo(sellData, buyData) {
 				}
 			}
 		}
+		
 	});
 	appendToCanvas(ctx);
 }
