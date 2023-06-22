@@ -100,11 +100,11 @@ public interface RevenueDao {
 	@Delete("delete from sell where sno=#{sno}")
 	int deletesell(int sno);
 
-	@Select("SELECT s.sno AS no, p.pname, DATE_FORMAT(s.sdate, \"%Y/%m/%d\") AS 'date', p.price, s.scount AS count, '판매' AS kind FROM sell s INNER JOIN product p ON s.pno = p.pno  UNION\r\n"
-			+ "SELECT a.bno AS no, adminstock.acontent,  DATE_FORMAT(a.bdate, \"%Y/%m/%d\") AS 'date', a.price, a.bcount AS count, '구매' AS kind FROM buy a\r\n"
-			+ "INNER JOIN adminstock ON a.pno = adminstock.ano\r\n"
-			+ "WHERE a.userid = #{userid}\r\n"
-			+ "ORDER BY date DESC, no DESC;")
+	@Select("SELECT s.sno AS no, p.pname, DATE_FORMAT(s.sdate, \"%Y/%m/%d\") AS 'date', p.price, s.scount AS count, '판매' AS kind FROM sell s INNER JOIN product p ON s.pno = p.pno WHERE s.userid = #{userid}"
+			+" UNION"
+			+" SELECT a.bno AS no, adminstock.acontent, DATE_FORMAT(a.bdate, \"%Y/%m/%d\") AS 'date', a.price, a.bcount AS count, '구매' AS kind FROM buy a INNER JOIN adminstock ON a.pno = adminstock.ano"
+			+" WHERE a.userid = #{userid}"
+			+" ORDER BY date DESC, no DESC;")
 	List<Map<String, Object>> totalList(String userid);
 	                                                                                                                                                                            
 	@Select("select *from sell,buy where pname=#{search}")
@@ -114,16 +114,16 @@ public interface RevenueDao {
 	int countb();
 
 	// chart
-		@Select("SELECT MONTH(sdate) AS month, SUM(price) AS sell_price FROM sell WHERE sdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)")
+		@Select("SELECT MONTH(sdate) AS month, SUM(price) AS sell_price FROM sell WHERE userid=#{userid} and sdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)")
 		List<Map<String, Object>> getFilteredData(Map<String, Object> m);
 
-		@Select("SELECT MONTH(bdate) AS month, SUM(price) AS buy_price FROM buy WHERE bdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)")
+		@Select("SELECT MONTH(bdate) AS month, SUM(price) AS buy_price FROM buy WHERE userid=#{userid} and bdate BETWEEN #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)")
 		List<Map<String, Object>> getbuyData(Map<String, Object> m);
 
 		@Select("SELECT s.month, (s.total_price - b.total_price) AS profit FROM"
-				+ "  (SELECT MONTH(sdate) AS month, SUM(price) AS total_price FROM sell WHERE sdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)) AS s "
+				+ "  (SELECT MONTH(sdate) AS month, SUM(price) AS total_price FROM sell WHERE userid=#{userid} and sdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(sdate) order by MONTH(sdate)) AS s "
 				+ "JOIN "
-				+ "  (SELECT MONTH(bdate) AS month, SUM(price) AS total_price FROM buy WHERE bdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)) AS b "
+				+ "  (SELECT MONTH(bdate) AS month, SUM(price) AS total_price FROM buy WHERE userid=#{userid} and bdate BETWEEN  #{startDate} AND #{endDate} GROUP BY MONTH(bdate) order by MONTH(bdate)) AS b "
 				+ "ON s.month = b.month")
 		List<Map<String, Object>> gettotalData(Map<String, Object> m);
 

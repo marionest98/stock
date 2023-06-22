@@ -242,4 +242,30 @@ function getmaininfo(sellData, buyData) {
 			}
 		}
 	});
+	appendToCanvas(ctx);
 }
+function appendToCanvas(ctx) {
+	console.log("appendToCanv 호출")
+    var areachart = ctx.parentNode;
+    
+    var legendContainer = document.createElement("div");
+    legendContainer.className = "legend-container";
+
+    var sellNote = document.createElement("div");
+    sellNote.className = "legend-note";
+    sellNote.style.backgroundColor = "rgba(78, 115, 223, 1)";
+    var sellText = document.createTextNode("판매량");
+    sellNote.appendChild(sellText);
+
+    var buyNote = document.createElement("div");
+    buyNote.className = "legend-note";
+    buyNote.style.backgroundColor = "rgba(231, 76, 60, 1)";
+    var buyText = document.createTextNode("구매량");
+    buyNote.appendChild(buyText);
+
+    legendContainer.appendChild(sellNote);
+    legendContainer.appendChild(buyNote);
+
+    areachart.appendChild(legendContainer);
+}
+
